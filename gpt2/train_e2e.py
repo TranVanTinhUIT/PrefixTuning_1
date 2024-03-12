@@ -178,8 +178,8 @@ if __name__ == '__main__':
 
 
     elif args.mode == 'triples':
-        TRAIN_FILE = "/content/PrefixTuning_1/data/dart/data/v1.1.1/dart-v1.1.1-full-train.json"
-        TEST_FILE = "/content/PrefixTuning_1/data/dart/data/v1.1.1/dart-v1.1.1-full-dev.json"
+        TRAIN_FILE = "/content/PrefixTuning_1/data/dart/dart-v1.1.1-full-train.json"
+        TEST_FILE = "/content/PrefixTuning_1/data/dart/dart-v1.1.1-full-dev.json"
 
         # TRAIN_FILE = "/u/scr/xlisali/DART/dart/data/v1.1.1/dart-v1.1.1-full-train.json"
         # TEST_FILE = "/u/scr/xlisali/DART/dart/data/v1.1.1/dart-v1.1.1-full-dev.json"
@@ -188,8 +188,8 @@ if __name__ == '__main__':
 
     elif args.mode == 'webnlg':
         # 2017 Challeng Version.
-        TRAIN_FILE = "/content/PrefixTuning_1/data/webnlg-dataset/webnlg_challenge_2017/train.json"
-        TEST_FILE = "/content/PrefixTuning_1/data/webnlg-dataset/webnlg_challenge_2017/dev.json"
+        TRAIN_FILE = "/content/PrefixTuning_1/data/webnlg_challenge_2017/train.json"
+        TEST_FILE = "/content/PrefixTuning_1/data/webnlg_challenge_2017/dev.json"
 
         
         # TRAIN_FILE = "/u/scr/xlisali/WebNLG/webnlg-dataset/webnlg_challenge_2017/train.json"
