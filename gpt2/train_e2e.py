@@ -1,7 +1,7 @@
 import os, sys
 import argparse
 from pathlib import Path
-from ..config import settings
+import settings
 
 # example: python train_run.py keyword temp_keyword _
 if not sys.warnoptions:

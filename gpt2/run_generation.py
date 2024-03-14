@@ -24,7 +24,7 @@ import logging
 import numpy as np
 import torch
 import json
-from ..config import settings
+import settings
 
 from transformers import (
     CTRLLMHeadModel,
