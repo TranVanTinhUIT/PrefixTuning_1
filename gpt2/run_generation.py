@@ -24,6 +24,7 @@ import logging
 import numpy as np
 import torch
 import json
+from ..config import settings
 
 from transformers import (
     CTRLLMHeadModel,
@@ -789,13 +790,13 @@ def main():
 
         else:
             if ('lowdata' in args.model_name_or_path) or (args.prefixModel_name_or_path is not None and 'lowdata' in args.prefixModel_name_or_path):
-                test_path = '/u/scr/xlisali/e2e_data/src1_valid.txt'
+                test_path = settings.DATASET_PATH + '/e2e_data/src1_valid.txt'
             else:
 
                 if args.eval_dataset == 'valid':
-                    test_path = '/u/scr/xlisali/e2e_data/src1_valid.txt'
+                    test_path = settings.DATASET_PATH + '/e2e_data/src1_valid.txt'
                 elif args.eval_dataset == 'test':
-                    test_path = '/u/scr/xlisali/e2e_data/src1_test.txt'
+                    test_path = settings.DATASET_PATH + '/e2e_data/src1_test.txt'
 
             print('using the test path ', test_path)
             if args.prefixModel_name_or_path is not None:
@@ -814,16 +815,16 @@ def main():
             prompt_text_lst = list(prompt_text_dict.keys())
             split_file = args.eval_dataset
             decode_mode = 'beam'
-            curr_dir = os.path.join('/u/scr/xlisali/contrast_LM/transformers/examples/text-generation/',
+            curr_dir = os.path.join(settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/text-generation/',
                                     args.gen_dir,
                                     '{}_{}_{}'.format(temp, split_file, decode_mode))
             print(curr_dir)
-            gold_dir = os.path.join('/u/scr/xlisali/contrast_LM/transformers/examples/text-generation/',
+            gold_dir = os.path.join(settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/text-generation/',
                                     args.gen_dir,
                                     '{}_{}_{}'.format(temp, split_file,'gold'))
             print(gold_dir)
             write_e2e_corr(prompt_text_lst, prompt_text_dict, gold_dir)
-            src_dir = os.path.join('/u/scr/xlisali/contrast_LM/transformers/examples/text-generation/',
+            src_dir = os.path.join(settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/text-generation/',
                                    args.gen_dir,
                                    '{}_{}_{}'.format(temp,split_file, 'src'))
             write_e2e_src(prompt_text_lst, src_dir)
@@ -862,18 +863,24 @@ def main():
                 temp = os.path.basename(args.model_name_or_path)
             split_file = args.eval_dataset # test
             decode_mode = 'beam'
-            curr_dir = os.path.join('/u/scr/xlisali/contrast_LM/transformers/examples/text-generation/',
+            curr_dir = os.path.join(settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/text-generation/',
                                     args.gen_dir,
                                     '{}_{}_{}'.format(temp, split_file, decode_mode))
             print(curr_dir)
-            gold_dir = os.path.join('/u/scr/xlisali/contrast_LM/transformers/examples/text-generation/',
+            if not os.path.exists(curr_dir):
+                os.makedirs(curr_dir)
+            gold_dir = os.path.join(settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/text-generation/',
                                     args.gen_dir,
                                     '{}_{}_{}'.format(temp, split_file, 'gold'))
             print(gold_dir)
+            if not os.path.exists(gold_dir):
+                os.makedirs(gold_dir)
             write_e2e_corr(prompt_text_pair, prompt_text_dict, gold_dir)
-            src_dir = os.path.join('/u/scr/xlisali/contrast_LM/transformers/examples/text-generation/',
+            src_dir = os.path.join(settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/text-generation/',
                                     args.gen_dir,
                                     '{}_{}_{}'.format(temp, split_file, 'src'))
+            if not os.path.exists(src_dir):
+                os.makedirs(src_dir)
             write_e2e_src(prompt_text_pair, src_dir)
 
 

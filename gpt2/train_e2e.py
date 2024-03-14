@@ -1,6 +1,7 @@
 import os, sys
 import argparse
 from pathlib import Path
+from ..config import settings
 
 # example: python train_run.py keyword temp_keyword _
 if not sys.warnoptions:
@@ -117,8 +118,10 @@ if __name__ == '__main__':
 
     if args.mode == 'data2text':
 
-        TRAIN_FILE = "../data/e2e_data/src1_train.txt"
-        TEST_FILE = "../data/e2e_data/src1_valid.txt"
+        # TRAIN_FILE = "../data/e2e_data/src1_train.txt"
+        TRAIN_FILE =  settings.DATASET_PATH + "/e2e_data/src1_train.txt"
+        # TEST_FILE = "../data/e2e_data/src1_valid.txt"
+        TEST_FILE = settings.DATASET_PATH + "/data/e2e_data/src1_valid.txt"
         folder_name = 'save_e2e_models_convcheck/'
 
         if args.prefix_mode == 'embedding':
