@@ -60,12 +60,12 @@ if __name__ == '__main__':
     # DISTILLATION
     parser.add_argument('--distill', type=str, default='no', help='')
     parser.add_argument('--finetuned_model_path', type=str,
-                        default='/u/scr/xlisali/contrast_LM/transformers/examples/full/full/webnlgfinetune_n_20_act_ca'
+                        default= settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/full/full/webnlgfinetune_n_20_act_ca'
                                 't_b=6-e=10_d=0.0_u=no_lr=1e-05_w=0.0_s=101_r=n_m=512_earlystop', help='')
     parser.add_argument('--matching_objective', type=str, default='kl', help='kl or logits')
 
     # Added by MX
-    parser.add_argument('--cache_dir', type=str, default='/u/scr/xlisali/contrast_LM/transformers/examples/control', help='cache dir')
+    parser.add_argument('--cache_dir', type=str, default= settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/control', help='cache dir')
     parser.add_argument('--use_custom_teacher_dropout', type=str, default='no', help='')
 
 
@@ -181,8 +181,8 @@ if __name__ == '__main__':
 
 
     elif args.mode == 'triples':
-        TRAIN_FILE = "/content/PrefixTuning_1/data/dart/dart-v1.1.1-full-train.json"
-        TEST_FILE = "/content/PrefixTuning_1/data/dart/dart-v1.1.1-full-dev.json"
+        TRAIN_FILE = settings.DATASET_PATH + "/dart/dart-v1.1.1-full-train.json"
+        TEST_FILE = settings.DATASET_PATH + "/dart/dart-v1.1.1-full-dev.json"
 
         # TRAIN_FILE = "/u/scr/xlisali/DART/dart/data/v1.1.1/dart-v1.1.1-full-train.json"
         # TEST_FILE = "/u/scr/xlisali/DART/dart/data/v1.1.1/dart-v1.1.1-full-dev.json"
@@ -191,8 +191,8 @@ if __name__ == '__main__':
 
     elif args.mode == 'webnlg':
         # 2017 Challeng Version.
-        TRAIN_FILE = "/content/PrefixTuning_1/data/webnlg_challenge_2017/train.json"
-        TEST_FILE = "/content/PrefixTuning_1/data/webnlg_challenge_2017/dev.json"
+        TRAIN_FILE = settings.DATASET_PATH + "/webnlg_challenge_2017/train.json"
+        TEST_FILE = settings.DATASET_PATH + "/webnlg_challenge_2017/dev.json"
 
         
         # TRAIN_FILE = "/u/scr/xlisali/WebNLG/webnlg-dataset/webnlg_challenge_2017/train.json"
@@ -209,8 +209,8 @@ if __name__ == '__main__':
         folder_name = "wp_models/"
 
     elif args.mode == 'cnndm':
-        TRAIN_FILE = '/u/scr/xlisali/contrast_LM/transformers/examples/seq2seq/cnn_dm/train.source'
-        TEST_FILE = '/u/scr/xlisali/contrast_LM/transformers/examples/seq2seq/cnn_dm/val.source'
+        TRAIN_FILE =  settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/seq2seq/cnn_dm/train.source'
+        TEST_FILE = settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/seq2seq/cnn_dm/val.source'
 
         max_source_length = 512
         max_target_length = 56
@@ -225,8 +225,8 @@ if __name__ == '__main__':
         assert args.optim_prefix == 'yes'
 
     elif args.mode == 'xsum':
-        TRAIN_FILE = "/u/scr/xlisali/contrast_LM/transformers/examples/seq2seq/xsum/train.source"
-        TEST_FILE = "/u/scr/xlisali/contrast_LM/transformers/examples/seq2seq/xsum/val.source"
+        TRAIN_FILE = settings.OUTPUT_PATH + "/contrast_LM/transformers/examples/seq2seq/xsum/train.source"
+        TEST_FILE = settings.OUTPUT_PATH + "/contrast_LM/transformers/examples/seq2seq/xsum/val.source"
 
         max_source_length = 512
         max_target_length = 60
@@ -369,7 +369,7 @@ if __name__ == '__main__':
     COMMANDLINE += app
 
     if load_prefix_model:
-        LOAD_TRAIN_PREFIX = '/u/scr/xlisali/contrast_LM/transformers/examples/control/med_topic_gen'
+        LOAD_TRAIN_PREFIX = settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/control/med_topic_gen'
         COMMANDLINE += '--prefixModel_name_or_path {} '.format(LOAD_TRAIN_PREFIX)
 
 
