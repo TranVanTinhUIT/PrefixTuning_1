@@ -867,20 +867,24 @@ def main():
                                     args.gen_dir,
                                     '{}_{}_{}'.format(temp, split_file, decode_mode))
             print(curr_dir)
-            if not os.path.exists(curr_dir):
-                os.makedirs(curr_dir)
+            parent_curr_dir = os.path.dirname(curr_dir)
+            if not os.path.exists(parent_curr_dir):
+                os.remove(parent_curr_dir)
             gold_dir = os.path.join(settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/text-generation/',
                                     args.gen_dir,
                                     '{}_{}_{}'.format(temp, split_file, 'gold'))
             print(gold_dir)
-            if not os.path.exists(gold_dir):
-                os.makedirs(gold_dir)
+            parent_gold_dir = os.path.dirname(gold_dir)
+            if not os.path.exists(parent_gold_dir):
+                os.makedirs(parent_gold_dir)
             write_e2e_corr(prompt_text_pair, prompt_text_dict, gold_dir)
             src_dir = os.path.join(settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/text-generation/',
                                     args.gen_dir,
                                     '{}_{}_{}'.format(temp, split_file, 'src'))
-            if not os.path.exists(src_dir):
-                os.makedirs(src_dir)
+            
+            parent_src_dir = os.path.dirname(src_dir)
+            if not os.path.exists(parent_src_dir):
+                os.makedirs(parent_src_dir)
             write_e2e_src(prompt_text_pair, src_dir)
 
 

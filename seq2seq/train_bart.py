@@ -1,6 +1,6 @@
 import os, sys
 import argparse
-
+import settings
 # example: python train_run.py keyword temp_keyword _
 if not sys.warnoptions:
     import warnings
@@ -79,15 +79,15 @@ if __name__ == '__main__':
 
 
     elif args.mode == 'triples':
-        TRAIN_FILE = "/u/scr/xlisali/DART/dart/data/v1.1.1/dart-v1.1.1-full-train.json"
-        TEST_FILE = "/u/scr/xlisali/DART/dart/data/v1.1.1/dart-v1.1.1-full-dev.json"
+        TRAIN_FILE = settings.DATASET_PATH + "/dart/dart-v1.1.1-full-train.json"
+        TEST_FILE = settings.DATASET_PATH + "/dart/dart-v1.1.1-full-dev.json"
         folder_name = "triples_models/"
 
 
     elif args.mode == 'webnlg':
         # 2017 Challeng Version.
-        TRAIN_FILE = "/u/scr/xlisali/WebNLG/webnlg-dataset/webnlg_challenge_2017/train.json"
-        TEST_FILE = "/u/scr/xlisali/WebNLG/webnlg-dataset/webnlg_challenge_2017/dev.json"
+        TRAIN_FILE = settings.DATASET_PATH + "/webnlg_challenge_2017/train.json"
+        TEST_FILE = settings.DATASET_PATH + "/webnlg_challenge_2017/dev.json"
         folder_name = "webnlg_models/"
 
     elif args.mode == 'writingPrompts':
@@ -166,8 +166,8 @@ if __name__ == '__main__':
         folder_name = "sentiment_models/"
 
     elif args.mode == 'topic':
-        TRAIN_FILE = "/u/scr/xlisali/contrast_LM/transformers/examples/text-classification/glue_data/AG-news/train1.tsv"
-        TEST_FILE = "/u/scr/xlisali/contrast_LM/transformers/examples/text-classification/glue_data/AG-news/dev1.tsv"
+        TRAIN_FILE = settings.OUTPUT_PATH + "/contrast_LM/transformers/examples/text-classification/glue_data/AG-news/train1.tsv"
+        TEST_FILE = settings.OUTPUT_PATH + "/contrast_LM/transformers/examples/text-classification/glue_data/AG-news/dev1.tsv"
         folder_name = "topic_models/"
 
     elif args.mode == 'classify-sentiment':
@@ -177,8 +177,8 @@ if __name__ == '__main__':
         assert args.optim_prefix == 'yes'
 
     elif args.mode == 'classify-topic':
-        TRAIN_FILE = "/u/scr/xlisali/contrast_LM/transformers/examples/text-classification/glue_data/AG-news/train1.tsv"
-        TEST_FILE = "/u/scr/xlisali/contrast_LM/transformers/examples/text-classification/glue_data/AG-news/dev1.tsv"
+        TRAIN_FILE = settings.OUTPUT_PATH + "/contrast_LM/transformers/examples/text-classification/glue_data/AG-news/train1.tsv"
+        TEST_FILE = settings.OUTPUT_PATH + "/contrast_LM/transformers/examples/text-classification/glue_data/AG-news/dev1.tsv"
         folder_name = "classification_models/"
         assert args.optim_prefix == 'yes'
 
@@ -235,7 +235,7 @@ if __name__ == '__main__':
 
 
     if OLD_MODEL == 'gpt2-large':
-        app += ' --cache_dir /u/scr/xlisali/contrast_LM/transformers/examples/control/gpt2-large-s3 '
+        app += ' --cache_dir {}/contrast_LM/transformers/examples/control/gpt2-large-s3 '.format(settings.OUTPUT_PATH)
 
     if args.tuning_mode == 'finetune-top':
         app += ' --top_layers {} '.format(args.top_layers)

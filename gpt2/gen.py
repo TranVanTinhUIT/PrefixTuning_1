@@ -1,4 +1,5 @@
 import os, sys
+import settings
 
 # example: python train_run.py keyword temp_keyword _
 if __name__ == '__main__':
@@ -282,10 +283,10 @@ if __name__ == '__main__':
 
 
     if MODEL_FILE == 'gpt2-large':
-        COMMANDLINE += ' --cache_dir /u/scr/xlisali/contrast_LM/transformers/examples/control/gpt2-large-s3 '
+        COMMANDLINE += ' --cache_dir {}/contrast_LM/transformers/examples/control/gpt2-large-s3 '.format(settings.OUTPUT_PATH)
 
     if MODEL_FILE == 'gpt2-medium':
-        COMMANDLINE += ' --cache_dir /u/scr/xlisali/contrast_LM/transformers/examples/control/gpt2-medium-s3 '
+        COMMANDLINE += ' --cache_dir {}/contrast_LM/transformers/examples/control/gpt2-medium-s3 '.format(settings.OUTPUT_PATH)
 
 
     print(COMMANDLINE)
