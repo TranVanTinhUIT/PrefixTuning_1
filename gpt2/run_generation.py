@@ -869,7 +869,7 @@ def main():
             print(curr_dir)
             parent_curr_dir = os.path.dirname(curr_dir)
             if not os.path.exists(parent_curr_dir):
-                os.remove(parent_curr_dir)
+                os.makedirs(parent_curr_dir)
             gold_dir = os.path.join(settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/text-generation/',
                                     args.gen_dir,
                                     '{}_{}_{}'.format(temp, split_file, 'gold'))
