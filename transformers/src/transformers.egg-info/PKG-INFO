@@ -7,6 +7,7 @@ Author: Thomas Wolf, Lysandre Debut, Victor Sanh, Julien Chaumond, Sam Shleifer,
 Author-email: thomas@huggingface.co
 License: Apache
 Keywords: NLP deep learning transformer pytorch tensorflow BERT GPT GPT-2 google openai CMU
+Platform: UNKNOWN
 Classifier: Development Status :: 5 - Production/Stable
 Classifier: Intended Audience :: Developers
 Classifier: Intended Audience :: Education
@@ -19,88 +20,20 @@ Classifier: Programming Language :: Python :: 3.7
 Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
 Requires-Python: >=3.6.0
 Description-Content-Type: text/markdown
-License-File: LICENSE
-Requires-Dist: numpy
-Requires-Dist: tokenizers==0.8.1.rc2
-Requires-Dist: dataclasses; python_version < "3.7"
-Requires-Dist: packaging
-Requires-Dist: filelock
-Requires-Dist: requests
-Requires-Dist: tqdm>=4.27
-Requires-Dist: regex!=2019.12.17
-Requires-Dist: sentencepiece!=0.1.92
-Requires-Dist: sacremoses
 Provides-Extra: ja
-Requires-Dist: fugashi>=1.0; extra == "ja"
-Requires-Dist: ipadic<2.0,>=1.0.0; extra == "ja"
-Requires-Dist: unidic_lite>=1.0.7; extra == "ja"
-Requires-Dist: unidic>=1.0.2; extra == "ja"
 Provides-Extra: sklearn
-Requires-Dist: scikit-learn; extra == "sklearn"
 Provides-Extra: tf
-Requires-Dist: tensorflow>=2.0; extra == "tf"
-Requires-Dist: onnxconverter-common; extra == "tf"
-Requires-Dist: keras2onnx; extra == "tf"
 Provides-Extra: tf-cpu
-Requires-Dist: tensorflow-cpu>=2.0; extra == "tf-cpu"
-Requires-Dist: onnxconverter-common; extra == "tf-cpu"
-Requires-Dist: keras2onnx; extra == "tf-cpu"
 Provides-Extra: torch
-Requires-Dist: torch>=1.0; extra == "torch"
 Provides-Extra: onnxruntime
-Requires-Dist: onnxruntime>=1.4.0; extra == "onnxruntime"
-Requires-Dist: onnxruntime-tools>=1.4.2; extra == "onnxruntime"
 Provides-Extra: serving
-Requires-Dist: pydantic; extra == "serving"
-Requires-Dist: uvicorn; extra == "serving"
-Requires-Dist: fastapi; extra == "serving"
-Requires-Dist: starlette; extra == "serving"
 Provides-Extra: all
-Requires-Dist: pydantic; extra == "all"
-Requires-Dist: uvicorn; extra == "all"
-Requires-Dist: fastapi; extra == "all"
-Requires-Dist: starlette; extra == "all"
-Requires-Dist: tensorflow; extra == "all"
-Requires-Dist: torch; extra == "all"
 Provides-Extra: retrieval
-Requires-Dist: faiss-cpu; extra == "retrieval"
-Requires-Dist: datasets; extra == "retrieval"
 Provides-Extra: testing
-Requires-Dist: pytest; extra == "testing"
-Requires-Dist: pytest-xdist; extra == "testing"
-Requires-Dist: timeout-decorator; extra == "testing"
-Requires-Dist: parameterized; extra == "testing"
-Requires-Dist: psutil; extra == "testing"
-Requires-Dist: faiss-cpu; extra == "testing"
-Requires-Dist: datasets; extra == "testing"
 Provides-Extra: docs
-Requires-Dist: recommonmark; extra == "docs"
-Requires-Dist: sphinx; extra == "docs"
-Requires-Dist: sphinx-markdown-tables; extra == "docs"
-Requires-Dist: sphinx-rtd-theme==0.4.3; extra == "docs"
-Requires-Dist: sphinx-copybutton; extra == "docs"
 Provides-Extra: quality
-Requires-Dist: black>=20.8b1; extra == "quality"
-Requires-Dist: isort>=5; extra == "quality"
-Requires-Dist: flake8>=3.8.3; extra == "quality"
 Provides-Extra: dev
-Requires-Dist: pytest; extra == "dev"
-Requires-Dist: pytest-xdist; extra == "dev"
-Requires-Dist: timeout-decorator; extra == "dev"
-Requires-Dist: parameterized; extra == "dev"
-Requires-Dist: psutil; extra == "dev"
-Requires-Dist: faiss-cpu; extra == "dev"
-Requires-Dist: datasets; extra == "dev"
-Requires-Dist: black>=20.8b1; extra == "dev"
-Requires-Dist: isort>=5; extra == "dev"
-Requires-Dist: flake8>=3.8.3; extra == "dev"
-Requires-Dist: fugashi>=1.0; extra == "dev"
-Requires-Dist: ipadic<2.0,>=1.0.0; extra == "dev"
-Requires-Dist: unidic_lite>=1.0.7; extra == "dev"
-Requires-Dist: unidic>=1.0.2; extra == "dev"
-Requires-Dist: scikit-learn; extra == "dev"
-Requires-Dist: tensorflow; extra == "dev"
-Requires-Dist: torch; extra == "dev"
+License-File: LICENSE
 
 <p align="center">
     <br>
@@ -318,3 +251,5 @@ We now have a [paper](https://arxiv.org/abs/1910.03771) you can cite for the ðŸ¤
   volume={abs/1910.03771}
 }
 ```
+
+
