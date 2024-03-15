@@ -1351,8 +1351,8 @@ def main():
         out_file_eval = curr_dir + '_eval'
         print(out_file_eval, '\n', gold_dir, '\n', curr_dir)
         tagging = os.path.basename(curr_dir)
-        os.system("bash /u/scr/xlisali/DART/dart/evaluation/run_eval_on_webnlg.sh "
-                  "{} {} >> {}".format(curr_dir, tagging, out_file_eval))
+        os.system("bash {}/run_eval_on_webnlg.sh "
+                  "{} {} >> {}".format(settings.EVALUATION_PATH, curr_dir, tagging, out_file_eval))
 
 
     elif 'classify' in curr_dir:
