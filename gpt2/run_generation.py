@@ -811,22 +811,22 @@ def main():
                 lowdata_token = None
             prompt_text_dict = read_e2e_files(test_path, tokenizer, lowdata_token)
 
-            # print(prompt_text_dict)
             prompt_text_lst = list(prompt_text_dict.keys())
             split_file = args.eval_dataset
             decode_mode = 'beam'
             curr_dir = os.path.join(settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/text-generation/',
                                     args.gen_dir,
                                     '{}_{}_{}'.format(temp, split_file, decode_mode))
-            print(curr_dir)
+            print("curr_dir: " + curr_dir)
             gold_dir = os.path.join(settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/text-generation/',
                                     args.gen_dir,
                                     '{}_{}_{}'.format(temp, split_file,'gold'))
-            print(gold_dir)
+            print("gold_dir: " + gold_dir)
             write_e2e_corr(prompt_text_lst, prompt_text_dict, gold_dir)
             src_dir = os.path.join(settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/text-generation/',
                                    args.gen_dir,
                                    '{}_{}_{}'.format(temp,split_file, 'src'))
+            print("src_dir: " + src_dir)
             write_e2e_src(prompt_text_lst, src_dir)
             out_handle = open(curr_dir, 'w')
 
@@ -1351,8 +1351,9 @@ def main():
         out_file_eval = curr_dir + '_eval'
         print(out_file_eval, '\n', gold_dir, '\n', curr_dir)
         tagging = os.path.basename(curr_dir)
-        os.system("bash {}/run_eval_on_webnlg.sh "
-                  "{} {} >> {}".format(settings.EVALUATION_PATH, curr_dir, tagging, out_file_eval))
+        temp_command = "bash {}/run_eval_on_webnlg.sh {} {} >> {}".format(settings.EVALUATION_PATH, curr_dir, tagging, out_file_eval)
+        print("*** RUN CMD: " + temp_command)
+        os.system(temp_command)
 
 
     elif 'classify' in curr_dir:
