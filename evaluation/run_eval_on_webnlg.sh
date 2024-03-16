@@ -1,6 +1,6 @@
 #! /bin/bash
 
-OUTPUT_FILE=./example/bart_webnlg.txt
+OUTPUT_FILE=./results/bart_webnlg.txt
 export TEAMR=team
 
 echo $OUTPUT_FILE
