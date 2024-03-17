@@ -237,7 +237,7 @@ def read_participant(output_file, teamname):
 
     b = Benchmark()
     b.fill_benchmark([(path, goldfile)])
-
+    print("b.entries", b.entries, len(b.entries))
     # per size
     for size in range(1, 8):
         # print(size)

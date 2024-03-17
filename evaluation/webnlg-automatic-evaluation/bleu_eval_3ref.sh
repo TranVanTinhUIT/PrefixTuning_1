@@ -9,6 +9,7 @@ teams="$TEAMR"
 #'BIU_Chimera_v1'
 #'ADAPT_Centre GKB_Unimelb PKUWriter Tilburg_University-1 Tilburg_University-2 Tilburg_University-3 UIT-DANGNT-CLNLP UPF-TALN Baseline'
 
+echo $teams
 
 for team in $teams
 do
