@@ -1,0 +1,131 @@
+Meteor version: 1.5
+
+Eval ID:        meteor-1.5-wo-en-norm-0.85_0.2_0.6_0.75-ex_st_sy_pa-1.0_0.6_0.8_0.6
+
+Language:       English
+Format:         plaintext
+Task:           Ranking
+Modules:        exact stem synonym paraphrase
+Weights:        1.0 0.6 0.8 0.6
+Parameters:     0.85 0.2 0.6 0.75
+
+Segment 1 score:	0.49431848493282815
+Segment 2 score:	1.0
+Segment 3 score:	0.5304166083030877
+Segment 4 score:	0.3685432145862242
+Segment 5 score:	0.48526360589573847
+Segment 6 score:	0.5750403163316513
+Segment 7 score:	0.59340374958164
+Segment 8 score:	0.3896830384025597
+Segment 9 score:	0.3665685322015463
+Segment 10 score:	1.0
+Segment 11 score:	1.0
+Segment 12 score:	1.0
+Segment 13 score:	0.9055141002035082
+Segment 14 score:	0.5529095463155477
+Segment 15 score:	0.49459661551673945
+Segment 16 score:	0.8545454545454547
+Segment 17 score:	0.37899695243167036
+Segment 18 score:	1.0
+Segment 19 score:	0.3679108595478941
+Segment 20 score:	0.339940579624897
+Segment 21 score:	1.0
+Segment 22 score:	0.9400000000000001
+Segment 23 score:	1.0
+Segment 24 score:	1.0
+Segment 25 score:	1.0
+Segment 26 score:	1.0
+Segment 27 score:	1.0
+Segment 28 score:	0.3887180412215386
+Segment 29 score:	1.0
+Segment 30 score:	0.544109778531922
+Segment 31 score:	0.5904341445970174
+Segment 32 score:	0.42904460660687926
+Segment 33 score:	0.42136951714885507
+Segment 34 score:	0.5006921366284126
+Segment 35 score:	0.4796483050183499
+Segment 36 score:	0.47537669286138307
+Segment 37 score:	0.5458699182104971
+Segment 38 score:	0.37359710674177216
+Segment 39 score:	0.28617417255238226
+Segment 40 score:	0.47262299353340265
+Segment 41 score:	0.3851219920430533
+Segment 42 score:	0.3036472455720612
+Segment 43 score:	0.4107688788029887
+Segment 44 score:	0.9555555555555555
+Segment 45 score:	0.9875000000000002
+Segment 46 score:	0.45428455150977565
+Segment 47 score:	0.4722545268661649
+Segment 48 score:	0.40739686152927856
+Segment 49 score:	0.5290231641203795
+Segment 50 score:	0.4642384880743253
+Segment 51 score:	0.4879261507061903
+Segment 52 score:	0.354628231289803
+Segment 53 score:	0.3473351712154872
+Segment 54 score:	0.409954156682918
+Segment 55 score:	0.5413603408679557
+Segment 56 score:	0.4938430460801938
+Segment 57 score:	0.3570012542679823
+Segment 58 score:	0.3828370489774344
+Segment 59 score:	0.32443509896724615
+Segment 60 score:	0.41063013502696366
+Segment 61 score:	0.4796926384166088
+Segment 62 score:	0.34717055272469716
+Segment 63 score:	0.3842462698516425
+Segment 64 score:	0.30080708315913207
+Segment 65 score:	0.41169107928978743
+Segment 66 score:	0.2840421153598617
+Segment 67 score:	0.3518603780227518
+Segment 68 score:	0.4777023708768687
+Segment 69 score:	0.3975773923607177
+Segment 70 score:	0.36876282644673947
+Segment 71 score:	0.35803620840814043
+Segment 72 score:	0.3657488609153839
+Segment 73 score:	0.28351992639130924
+Segment 74 score:	0.2618099391476389
+Segment 75 score:	0.28338811753006465
+Segment 76 score:	0.4257966303705312
+Segment 77 score:	0.3195582664992903
+Segment 78 score:	0.31021406681092367
+Segment 79 score:	0.3319629265320786
+Segment 80 score:	0.42981086998811285
+Segment 81 score:	0.3839591472303127
+Segment 82 score:	0.431962552453218
+Segment 83 score:	0.3384281380088724
+Segment 84 score:	0.3578301284494254
+Segment 85 score:	0.5137652415544145
+Segment 86 score:	0.4048359035968093
+Segment 87 score:	0.3386742836648554
+Segment 88 score:	0.49957058145465344
+Segment 89 score:	0.5484439122804553
+Segment 90 score:	0.4373570995094741
+Segment 91 score:	0.4674424795872063
+Segment 92 score:	0.29000545660959137
+Segment 93 score:	0.35669975713733587
+Segment 94 score:	0.26273452507328543
+Segment 95 score:	0.3215993764110706
+Segment 96 score:	0.2833795817815214
+Segment 97 score:	0.4128486918388151
+Segment 98 score:	0.40118760230180045
+
+System level statistics:
+
+
+           Test Matches                  Reference Matches
+Stage      Content  Function    Total    Content  Function    Total
+1              844       745     1589        844       745     1589
+2                9         0        9          9         0        9
+3                2         3        5          2         3        5
+4               20        34       54         20        37       57
+Total          875       782     1657        875       785     1660
+
+Test words:             1898
+Reference words:        2204
+Chunks:                 497
+Precision:              0.8801258521237546
+Recall:                 0.7612420670897552
+f1:                     0.8163786011985125
+fMean:                  0.7769848555185779
+Fragmentation penalty:  0.4714975419281673
+
+Final score:            0.4106384060261562

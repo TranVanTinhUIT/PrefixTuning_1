@@ -1,7 +1,7 @@
 #! /bin/bash
 
-OUTPUT_FILE=./results/bart_webnlg.txt
-export TEAMR=team
+OUTPUT_FILE=./../output/contrast_LM/transformers/examples/text-generation/webNLG_results2_1epoch/webnlgprefixtune_test_beam.txt
+export TEAMR=test-beam
 
 echo $OUTPUT_FILE
 echo $TEAMR

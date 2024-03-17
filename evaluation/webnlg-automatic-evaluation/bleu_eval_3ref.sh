@@ -23,7 +23,7 @@ do
 		export HYP=teams/${team}_${param}.txt
  		echo $param
 
-		./multi-bleu.perl -lc ${TEST_TARGETS_REF0} ${TEST_TARGETS_REF1} ${TEST_TARGETS_REF2} < ${HYP} > eval/bleu3ref-${team}_${param}.txt
+		perl ./multi-bleu.perl -lc ${TEST_TARGETS_REF0} ${TEST_TARGETS_REF1} ${TEST_TARGETS_REF2} < ${HYP} > eval/bleu3ref-${team}_${param}.txt
 		
 		
 	done
