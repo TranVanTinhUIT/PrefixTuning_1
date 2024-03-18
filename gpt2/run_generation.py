@@ -1351,7 +1351,7 @@ def main():
         out_file_eval = curr_dir + '_eval'
         print(out_file_eval, '\n', gold_dir, '\n', curr_dir)
         tagging = os.path.basename(curr_dir)
-        temp_command = "bash {}/run_eval_on_webnlg.sh {} {} >> {}".format(settings.EVALUATION_PATH, curr_dir, tagging, out_file_eval)
+        temp_command = "cd {}\r\n bash run_eval_on_webnlg.sh {} {} >> {}".format(settings.EVALUATION_PATH, curr_dir, tagging, out_file_eval)
         print("*** RUN CMD: " + temp_command)
         os.system(temp_command)
 

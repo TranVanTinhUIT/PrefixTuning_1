@@ -1,0 +1,13 @@
+IMPORTANT: Replace OUTPUT_FILE with the generated output file when run model.
+EX: ./../output/contrast_LM/transformers/examples/text-generation/webNLG_results2_1epoch/webnlgprefixtune_test_beam.txt
+./../output/contrast_LM/transformers/examples/text-generation/webNLG_results2_1epoch/webnlgprefixtune_test_beam.txt
+test-beam
+ALL:
+SEEN:
+UNSEEN:
+ALL:
+SEEN:
+UNSEEN:
+ALL:
+SEEN:
+UNSEEN:

@@ -10,8 +10,6 @@ echo $TEAMR
 
 cp $OUTPUT_FILE ./webnlg-automatic-evaluation/submissions/$TEAMR.txt
 
-cd .
-
 # BLEU
 cd webnlg-automatic-evaluation/
 python evaluation.py $TEAMR
