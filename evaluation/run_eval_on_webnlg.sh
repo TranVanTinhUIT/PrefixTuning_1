@@ -2,7 +2,7 @@
 echo "IMPORTANT: Replace OUTPUT_FILE with the generated output file when run model.
 EX: ./../output/contrast_LM/transformers/examples/text-generation/webNLG_results2_1epoch/webnlgprefixtune_test_beam.txt"
 
-OUTPUT_FILE=./../output/contrast_LM/transformers/examples/text-generation/webNLG_results2_1epoch/webnlgprefixtune_test_beam.txt
+OUTPUT_FILE=./../output/contrast_LM/transformers/examples/text-generation/webNLG_results2_5epoch_5prefix/webnlgprefixtune_test_beam.txt
 export TEAMR=test-beam
 
 echo $OUTPUT_FILE
