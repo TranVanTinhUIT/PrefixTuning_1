@@ -117,10 +117,7 @@ if __name__ == '__main__':
 
 
     if args.mode == 'data2text':
-
-        # TRAIN_FILE = "../data/e2e_data/src1_train.txt"
         TRAIN_FILE =  settings.DATASET_PATH + "/e2e_data/src1_train.txt"
-        # TEST_FILE = "../data/e2e_data/src1_valid.txt"
         TEST_FILE = settings.DATASET_PATH + "/data/e2e_data/src1_valid.txt"
         folder_name = 'save_e2e_models_convcheck/'
 
@@ -143,8 +140,6 @@ if __name__ == '__main__':
             TEST_FILE = "/juice/u/xlisali/e2e_lowdata/lowdata_{}_{}_valid.txt".format(temp_seed, temp_size)
             folder_name = 'e2e_lowdata_models_prefixtune/' # 50, 200
 
-
-
             app_special = ' --max_steps {} --eval_steps {} --save_steps -1 ' \
                           '--evaluate_during_training --per_device_eval_batch_size 32 ' \
                           '--warmup_steps {} --lowdata_token {} ' \
@@ -155,18 +150,11 @@ if __name__ == '__main__':
             args.notes = args.notes + 'st={}_ev={}_ws={}_t={}'.format(args.max_steps, args.eval_steps,
                                                                       args.warmup_steps, args.lowdata_token)
 
-
         if args.notes is not None and 'datalevels' in args.notes:
-            # for example, notes = 'datalevels-1-10
             _, temp_seed, temp_size = args.notes.split('_')
             TRAIN_FILE = "/juice/u/xlisali/e2e_datalevels/datalevels_{}_{}_train.txt".format(temp_seed, temp_size)
             TEST_FILE = "/juice/u/xlisali/e2e_datalevels/datalevels_{}_{}_valid.txt".format(temp_seed, temp_size)
-            # folder_name = 'e2e_lowdata_models_new/' #100
-            # folder_name = 'e2e_lowdata_models_finetune/'
             folder_name = 'e2e_datalevels_models/' # 50, 200
-
-
-
 
             app_special_levels = ' --eval_steps {} --save_steps -1 ' \
                           '--evaluate_during_training --per_device_eval_batch_size 32 ' \
@@ -179,28 +167,16 @@ if __name__ == '__main__':
                                                                       args.warmup_steps, args.lowdata_token,
                                                                       args.use_lowdata_token)
 
-
     elif args.mode == 'triples':
         TRAIN_FILE = settings.DATASET_PATH + "/dart/dart-v1.1.1-full-train.json"
         TEST_FILE = settings.DATASET_PATH + "/dart/dart-v1.1.1-full-dev.json"
-
-        # TRAIN_FILE = "/u/scr/xlisali/DART/dart/data/v1.1.1/dart-v1.1.1-full-train.json"
-        # TEST_FILE = "/u/scr/xlisali/DART/dart/data/v1.1.1/dart-v1.1.1-full-dev.json"
         folder_name = "triples_models/"
-
 
     elif args.mode == 'webnlg':
         # 2017 Challeng Version.
         TRAIN_FILE = settings.DATASET_PATH + "/webnlg_challenge_2017/train.json"
         TEST_FILE = settings.DATASET_PATH + "/webnlg_challenge_2017/dev.json"
 
-        
-        # TRAIN_FILE = "/u/scr/xlisali/WebNLG/webnlg-dataset/webnlg_challenge_2017/train.json"
-        # TEST_FILE = "/u/scr/xlisali/WebNLG/webnlg-dataset/webnlg_challenge_2017/dev.json"
-
-        # v2
-        # TRAIN_FILE = "/u/scr/xlisali/WebNLG/webnlg-dataset/release_v2/json/webnlg_release_v2_train.json"
-        # TEST_FILE =  "/u/scr/xlisali/WebNLG/webnlg-dataset/release_v2/json/webnlg_release_v2_dev.json"
         folder_name = "webnlg_models/"
 
     elif args.mode == 'writingPrompts':
@@ -243,8 +219,6 @@ if __name__ == '__main__':
     if not os.path.isdir(folder_name):
         os.mkdir(folder_name)
 
-
-
     batch_size = args.gradient_accumulation_steps * args.bsz
 
     if args.init_shallow == 'yes':
@@ -282,8 +256,6 @@ if __name__ == '__main__':
 
     if args.notes is not None:
         Model_FILE += '_{}'.format(args.notes)
-
-    # Model_FILE = 'save_e2e_models/{}'.format(Model_FILE)
 
     logging_dir = os.path.join(folder_name, 'runs', Model_FILE)
     Model_FILE = '{}{}'.format(folder_name, Model_FILE)
@@ -373,13 +345,8 @@ if __name__ == '__main__':
         COMMANDLINE += '--prefixModel_name_or_path {} '.format(LOAD_TRAIN_PREFIX)
 
 
-
-
-
-
     with open(Model_FILE + '.sh', 'w') as f:
         print(COMMANDLINE, file=f)
-
 
     print(COMMANDLINE)
     if args.submit == 'no':

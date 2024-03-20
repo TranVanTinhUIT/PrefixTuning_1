@@ -16,7 +16,6 @@ if __name__ == '__main__':
 
         Token_FILE = MODEL_FILE
 
-        # gen_dir = 'e2e_results_conv'
         gen_dir = 'e2e_results_conv2'
 
         sub_model_name = os.path.basename(MODEL_FILE)
@@ -177,7 +176,6 @@ if __name__ == '__main__':
 
     elif mode == 'webnlg':
         Token_FILE = MODEL_FILE
-        # gen_dir = 'webNLG_results'
         gen_dir = 'webNLG_results2'
 
         sub_model_name = os.path.basename(MODEL_FILE)
@@ -255,7 +253,6 @@ if __name__ == '__main__':
             else:
                 MODEL_FILE = 'gpt2-medium'
 
-            # MODEL_FILE = 'gpt2-medium'
         elif 'adaptertune' in sub_model_name:
             tuning_mode = 'adaptertune'
             app = ''
@@ -294,8 +291,6 @@ if __name__ == '__main__':
     if not submit_job:
         os.system(COMMANDLINE)
     else:
-        # name = 'e2e_results_lowdata/{}'.format(name)
-        # name = 'e2e_results_lowdata_finetune/{}'.format(name)
         name = os.path.join(gen_dir, name)
         full_command = "nlprun -a lisa-base-torch -g 1 -n {} -x jagupard4,jagupard5,jagupard6,jagupard7,jagupard8,jagupard28,jagupard29 \'{}\'".format(name,COMMANDLINE)
         print(full_command)

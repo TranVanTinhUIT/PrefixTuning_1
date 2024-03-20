@@ -81,13 +81,6 @@ the Virgin Mary, prompting him to become a priest. Rasputin quickly becomes famo
 with people, even a bishop, begging for his blessing. <eod> </s> <eos>"""
 
 
-# def set_seed(args):
-#     np.random.seed(args.seed)
-#     torch.manual_seed(args.seed)
-#     if args.n_gpu > 0:
-#         torch.cuda.manual_seed_all(args.seed)
-
-
 #
 # Functions to prepare models' input
 #
@@ -104,7 +97,6 @@ def prepare_ctrl_input(args, _, tokenizer, prompt_text):
 
 
 def prepare_xlm_input(args, model, tokenizer, prompt_text):
-    # kwargs = {"language": None, "mask_token_id": None}
 
     # Set the language
     use_lang_emb = hasattr(model.config, "use_lang_emb") and model.config.use_lang_emb
@@ -119,13 +111,6 @@ def prepare_xlm_input(args, model, tokenizer, prompt_text):
 
         model.config.lang_id = model.config.lang2id[language]
         # kwargs["language"] = tokenizer.lang2id[language]
-
-    # TODO fix mask_token_id setup when configurations will be synchronized between models and tokenizers
-    # XLM masked-language modeling (MLM) models need masked token
-    # is_xlm_mlm = "mlm" in args.model_name_or_path
-    # if is_xlm_mlm:
-    #     kwargs["mask_token_id"] = tokenizer.mask_token_id
-
     return prompt_text
 
 
@@ -153,11 +138,8 @@ def read_e2e_files(path, tokenizer, lowdata_token=None):
     with open(path, 'r') as f:
         for line in f:
             src, tgt = line.strip().split('||')
-            # URGENT CHANGE
-            # src =  src + ' {}'.format(' summarize :')
             if lowdata_token is None:
                 src = ' {} {}'.format(src, tokenizer.bos_token)
-                # src =  src + ' {}'.format(tokenizer.bos_token)
             else:
                 src = ' {} {} {}'.format(lowdata_token, src, tokenizer.bos_token)
             if src not in file_dict:
@@ -224,8 +206,6 @@ def read_sum_files(path, tokenizer, max_source_length, max_target_length):
         )
 
         src_full = src_bpe + [tokenizer.bos_token_id] # add the bos token.
-
-        # print(len(src_full), src_full)
         src_full = tuple(src_full)
         if src_full not in file_dict:
             file_dict[src_full] = [tgt]
@@ -242,7 +222,6 @@ def read_webnlg_files(path, tokenizer):
 
     full_rela_lst = []
     full_src_lst = []
-    # full_tgt_lst = []
     total_count = 0
     for i, example in enumerate(lines_dict['entries']):
         sents = example[str(i + 1)]['lexicalisations']
@@ -348,14 +327,6 @@ def read_triples_files(path, tokenizer):
     assert len(full_rela_lst) == len(file_dict)
     return file_dict
 
-# def write_e2e_corr(prompt_lst, file_dict, corr_path):
-#     with open(corr_path, 'w') as f:
-#         for x in prompt_lst:
-#             for line in file_dict[x]:
-#                 print(line, file=f)
-#             print('', file=f)
-#     return
-
 def write_e2e_corr(prompt_lst, file_dict, corr_path):
     print(len(prompt_lst))
     with open(corr_path, 'w') as f:
@@ -366,25 +337,6 @@ def write_e2e_corr(prompt_lst, file_dict, corr_path):
                 else:
                     print(line, file=f)
             print('', file=f)
-
-    # buf = [[]]
-    # with open(corr_path, 'r') as fh:
-    #     for line in fh:
-    #         line = line.strip()
-    #         if True:
-    #             # print(line)
-    #             if not line:
-    #                 buf.append([])
-    #             else:
-    #                 buf[-1].append(line)
-    #         else:
-    #             buf.append(line)
-    # if not buf[-1]:
-    #     del buf[-1]
-    #
-    # print(buf[:3])
-    #
-    # print(len(buf))
 
     return
 
@@ -403,8 +355,6 @@ def adjust_length_to_model(length, max_sequence_length):
     elif length < 0:
         length = MAX_LENGTH  # avoid infinite loop
     return length
-
-
 
 def main():
     parser = argparse.ArgumentParser()
@@ -511,8 +461,6 @@ def main():
             print('loading from the init tokenizer')
             tokenizer = tokenizer_class.from_pretrained(args.tokenizer_name, cache_dir=args.cache_dir)
 
-        # tokenizer = tokenizer_class.from_pretrained(args.model_name_or_path)
-
         print(len(tokenizer), tokenizer.bos_token, tokenizer.eos_token, tokenizer.pad_token)
         config = AutoConfig.from_pretrained(args.model_name_or_path, cache_dir=args.cache_dir)
         print(config)
@@ -564,8 +512,6 @@ def main():
             assert False, "should load from the prefixModel_name_or_path tokenizer"
             tokenizer = tokenizer_class.from_pretrained(args.tokenizer_name, cache_dir=args.cache_dir)
 
-            # tokenizer = tokenizer_class.from_pretrained(args.model_name_or_path)
-
         print(len(tokenizer), tokenizer.bos_token, tokenizer.eos_token, tokenizer.pad_token)
         config = AutoConfig.from_pretrained(args.model_name_or_path, cache_dir=args.cache_dir)
         print(config)
@@ -606,9 +552,6 @@ def main():
                 )
 
             model.to(args.device)
-
-
-
 
     elif args.tuning_mode == 'prefixtune':
 
@@ -676,9 +619,6 @@ def main():
 
         gpt2 = model
 
-        # config._my_arg_task_mode = args.task_mode
-        # config._my_arg_control = True
-        # config.train_weights = 'no'
         print(config)
         if args.optim_prefix == 'yes':
             optim_prefix_bool = True
@@ -712,53 +652,9 @@ def main():
                     model_gpt2=gpt2, optim_prefix=optim_prefix_bool, preseqlen=args.preseqlen,
                     use_infix=(args.format_mode == 'infix')
                 )
-            #
-            ######################
-
-            # model = PrefixTuning.from_pretrained(
-            #     args.prefixModel_name_or_path,
-            #     from_tf=bool(".ckpt" in args.prefixModel_name_or_path,),
-            #     config=config,
-            #     model_gpt2=gpt2, optim_prefix=optim_prefix_bool, preseqlen=args.preseqlen,
-            # )
             model.to(args.device)
-
-            # print('-'*100)
-            # print(model.training)
-            # print(gpt2.training)
-            # model.train()
-            # gpt2.train()
-            # print(model.training)
-            # print(gpt2.training)
-            # model.eval()
-            # gpt2.eval()
-            # print(model.training)
-            # print(gpt2.training)
-            # print('-' * 100)
-
         else:
             assert False, "prefixModel_name_or_path is NONE."
-
-
-    # DEBUG
-    # if args.model_name_or_path == 'gpt2-medium':
-    #     num_added_tokens = tokenizer.add_special_tokens(
-    #         {'pad_token': '[PAD]', 'bos_token': '[BOS]', 'eos_token': '[EOS]'})
-    #     embedding_layer = model.resize_token_embeddings(len(tokenizer))
-
-    # if not args.model_name_or_path == 'gpt2-medium':
-    #     # num_added_tokens = tokenizer.add_special_tokens(
-    #     #     {'pad_token': '[PAD]', 'bos_token': '[BOS]', 'eos_token': '[EOS]'})
-    #     embedding_layer = model.resize_token_embeddings(len(tokenizer)-3)
-    #
-    #
-    #
-    # model1_param = list(model.parameters())
-    # model2 = model_class.from_pretrained('gpt2-medium')
-    # model2_param = list(model2.parameters())
-    # print(len(model1_param), len(model2_param))
-    # for i, j in zip(model1_param, model2_param):
-    #     print(torch.abs(i.mean()-j.mean()), end=' ')
 
 
     if args.fp16:
@@ -766,8 +662,6 @@ def main():
 
     args.length = adjust_length_to_model(args.length, max_sequence_length=model.config.max_position_embeddings)
     logger.info(args)
-
-
 
     if args.task_mode == 'data2text':
 
@@ -835,18 +729,15 @@ def main():
         QUICK_CHECK = False
         if args.task_mode == 'webnlg':
             if args.eval_dataset == 'valid':
-                # test_path = "/u/scr/xlisali/WebNLG/webnlg-dataset/webnlg_challenge_2017/dev.json"
                 test_path = settings.DATASET_PATH + "/webnlg_challenge_2017/dev.json"
                 
             elif args.eval_dataset == 'test':
-                # test_path = "/u/scr/xlisali/WebNLG/webnlg-dataset/webnlg_challenge_2017/test.json"
                 test_path = settings.DATASET_PATH + "/webnlg_challenge_2017/test.json"
             else:
                 assert False,  "eval_dataset needs to be [valid, test]"
             prompt_text_dict = read_webnlg_files(test_path, tokenizer)
         elif args.task_mode == 'triples':
             test_path = settings.DATASET_PATH + "/dart/dart-v1.1.1-full-test.json"
-            # test_path = "/u/scr/xlisali/DART/dart/data/v1.1.1/dart-v1.1.1-full-dev.json"
             prompt_text_dict = read_triples_files(test_path, tokenizer)
 
         if QUICK_CHECK:
@@ -921,18 +812,12 @@ def main():
             curr_dir = os.path.join(settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/text-generation/',
                                     args.gen_dir,
                                     '{}_{}_{}'.format(temp, split_file, decode_mode))
-            # curr_dir = '/u/scr/xlisali/contrast_LM/transformers/examples/text-generation/classify_results/{}_{}_{}'.format(
-            #     temp, split_file, decode_mode)
             print(curr_dir)
             if not os.path.exists(curr_dir):
                 os.makedirs(curr_dir)
             gold_dir = os.path.join(settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/text-generation/',
                                     args.gen_dir,
                                     '{}_{}_{}'.format(temp, split_file, 'gold'))
-            # gold_dir = '/u/scr/xlisali/contrast_LM/transformers/examples/text-generation/classify_results/{}_{}_{}'.format(
-            #     temp,
-            #     split_file,
-            #     'gold')
             print(gold_dir)
             if not os.path.exists(gold_dir):
                 os.makedirs(gold_dir)
@@ -940,10 +825,6 @@ def main():
             src_dir = os.path.join(settings.OUTPUT_PATH + '/contrast_LM/transformers/examples/text-generation/',
                                    args.gen_dir,
                                    '{}_{}_{}'.format(temp, split_file, 'src'))
-            # src_dir = '/u/scr/xlisali/contrast_LM/transformers/examples/text-generation/classify_results/{}_{}_{}'.format(
-            #     temp,
-            #     split_file,
-            #     'src')
             if not os.path.exists(src_dir):
                 os.makedirs(src_dir)
             write_e2e_src(prompt_text_lst, src_dir)
@@ -1026,24 +907,17 @@ def main():
 
 
         if args.control_mode == 'yes' and args.control_dataless != 'yes':
-            # URGENT, check whether the next line is necessary?
-            # control_code = torch.LongTensor(control_codes[prompt_idx]).to(model.device).unsqueeze(0).expand(args.num_return_sequences, -1)
             control_code = None
             pass
         else:
             control_code = None
-        # for param in model.base_model.parameters():
-        #     print(param.requires_grad)
 
-        # if args.control_dataless == 'yes':
         if args.tuning_mode == 'prefixtune' or args.tuning_mode == 'bothtune':
             if args.task_mode == 'data2text':
                 src = prompt_text_lst[prompt_idx].split()[:-1] # remove the bos token.
-                # print(src)
                 src = ' '.join(src)
                 catl = src.split('|')
                 cat = [cc.split(':')[0].strip() for cc in catl]
-                # print(cat)
 
                 src_cat = tokenizer(cat, add_special_tokens=True, truncation=True, is_split_into_words=True)['input_ids']
 
@@ -1060,7 +934,6 @@ def main():
                     mode = 'peek'
                 elif 'prefixtune15' in args.prefixModel_name_or_path:
                     mode = 'instruction_based'
-                    # assert False, "prefixtune20 shouldn't be processed here."
                 else:
                     if args.format_mode == 'infix':
                         mode = 'infix'
@@ -1076,10 +949,8 @@ def main():
                     cc = src
                 elif mode == 'infix':
                     cc = src
-                # print('control code is ', cc)
 
                 if mode == 'nopeek' or mode == 'infix':
-                    # print('the old input_ids is ', input_ids) # this looks right
                     input_pp = tokenizer.bos_token
                     encoded_prompt = tokenizer(input_pp, add_special_tokens=True, truncation=True, return_tensors="pt", is_split_into_words=False)['input_ids'].to(model.device)
                     input_ids = encoded_prompt
@@ -1112,7 +983,6 @@ def main():
                     mode = 'peek'
                 elif 'tune_y_' in args.prefixModel_name_or_path or config.optim_prefix:
                     mode = 'instruction_based'
-                    # assert False, "prefixtune20 shouldn't be processed here."
                 else:
                     if args.format_mode == 'infix':
                         mode = 'infix'
@@ -1163,13 +1033,7 @@ def main():
                 prompt = model.get_prompt(src, None, gpt2=gpt2, bsz=1) #src, control_code=None, gpt2=None, bsz=None, attn_mask=None
 
 
-            # if args.task_mode == 'writingPrompts':
-            #     prompt = None
-            # else:
-            # print(args.num_return_sequences)
             prompt = [x.expand(-1, args.num_return_sequences , -1, -1, -1) for x in prompt]
-            # print(prompt[0].shape)
-            # print(input_ids.shape)
 
             # assert control_code is None
             print(decode_mode)
@@ -1188,13 +1052,6 @@ def main():
                     num_return_sequences=args.num_return_sequences,
                 )
             elif decode_mode == 'beam':
-                ############################
-                # torch.set_printoptions(profile="full")
-                # print(input_ids)
-                # print()
-                # torch.set_printoptions(profile="default")
-                # print(prompt[5][0][0][0])
-
                 #############################
                 output_sequences = gpt2.generate(
                     input_ids=input_ids,
@@ -1212,7 +1069,6 @@ def main():
                     bad_words_ids=[[628], [198]] if True else None,
                     num_return_sequences=1,
                 )
-                # print(output_sequences)
 
             elif decode_mode == 'greedy':
                 output_sequences = gpt2.generate(
@@ -1280,9 +1136,6 @@ def main():
                     num_return_sequences=1,
                 )
 
-
-
-
         # Remove the batch dimension when returning multiple sequences
         if len(output_sequences.shape) > 2:
             output_sequences.squeeze_()
@@ -1292,7 +1145,6 @@ def main():
         if QUICK_CHECK:
             for generated_sequence_idx, generated_sequence in enumerate(output_sequences):
                 print("=== GENERATED SEQUENCE {} ===".format(generated_sequence_idx + 1))
-                # args.stop_token = tokenizer.eos_token
                 generated_sequence = generated_sequence.tolist()
 
                 # Decode text
@@ -1311,8 +1163,9 @@ def main():
         else:
             for generated_sequence_idx, generated_sequence in enumerate(output_sequences):
                 print("=== GENERATED SEQUENCE {} ===".format(generated_sequence_idx + 1))
-                # args.stop_token = tokenizer.eos_token
                 generated_sequence = generated_sequence.tolist()
+
+                # TODO: CHECK HERE FOR USE Pretrained LM without tuning
 
                 # Decode text
                 text = tokenizer.decode(generated_sequence, clean_up_tokenization_spaces=True)
@@ -1326,8 +1179,6 @@ def main():
 
                 if args.task_mode == 'topic' or args.task_mode == 'sentiment':
                     text_output = prompt_text + ' ' + text_output + ' [SPECIAL_END]'
-
-
 
                 if text_output:
                     print(text_output, file=out_handle)

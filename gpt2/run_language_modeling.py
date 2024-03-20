@@ -392,8 +392,6 @@ def get_dataset(
     file_path = args.eval_data_file if evaluate else args.train_data_file
     if args.line_by_line:
         print(args.task_mode)
-        # return LineByLineTextDataset(tokenizer=tokenizer, file_path=file_path, block_size=args.block_size)
-        # return LineByLineWithWeightTextDataset(tokenizer=tokenizer, file_path=file_path, block_size=args.block_size)
         if args.task_mode == 'embMatch':
             dataset = LineByLineEmbMatchTextDataset(tokenizer=tokenizer, file_path=file_path, block_size=args.block_size,
                                                 num_layer=1, bos_tok=tokenizer.bos_token,
@@ -471,15 +469,6 @@ def get_dataset(
         else:
             return LineByLineTextDataset(tokenizer=tokenizer, file_path=file_path, block_size=args.block_size)
 
-        # print(len(dataset))
-        # n = len(dataset) % training_args.per_device_train_batch_size
-        # if n != 0:
-        #     dataset.examples = dataset.examples[:-n]
-        #     dataset.labels = dataset.labels[:-n]
-        #
-        #     if hasattr(dataset, 'emb'):
-        #         dataset.emb = dataset.emb[:-n]
-        # print(len(dataset))
         return dataset
     else:
         return TextDataset(
@@ -623,29 +612,6 @@ def main():
     else:
         data_args.block_size = min(data_args.block_size, tokenizer.max_len)
 
-    # ADD SPECIAL TOKENS:
-    # if (model_args.tuning_mode != 'prefixtune') and ('lowdata' not in training_args.output_dir) and (model_args.tuning_mode != 'adaptertune'):
-    #     print(model_args.tuning_mode)
-    #     print('adapting the size of the model embedding to include [PAD], [BOS], [EOS].')
-    #     print('len(tokenizer) = ', len(tokenizer))
-    #     num_added_tokens = tokenizer.add_special_tokens({'pad_token': '[PAD]', 'bos_token':'[BOS]', 'eos_token':'[EOS]'})
-    #     embedding_layer = model.resize_token_embeddings(len(tokenizer))
-    #     print('len(tokenizer) = ', len(tokenizer))
-    # elif data_args.dataless == 'yes':
-    #     print(model_args.tuning_mode, 'dataless setting, so no new tokens at all.')
-    #     print('We do not add special tokens to the tokenizer, instead, we just finetune on <|endoftext|>')
-    #
-    #     print(tokenizer.eos_token_id)
-    #     print(tokenizer.eos_token)
-    #     print(tokenizer.pad_token_id)
-    #     tokenizer.pad_token = tokenizer.eos_token
-    #     # tokenizer(['he', 'hello w '], padding=True)
-    #
-    #     # tokenizer.pad_token_id = tokenizer.eos_token_id
-    #     # tokenizer.pad_token = tokenizer.eos_token
-    #     print(tokenizer.pad_token, tokenizer.pad_token_id)
-
-
     ##############################################################
     ################# ADJUST TOKENIZER ###########################
     ##############################################################
@@ -685,7 +651,6 @@ def main():
 
 
         print('loading the prefix model from ', model_args.prefixModel_name_or_path)
-        # print(bool(".ckpt" in model_args.prefixModel_name_or_path))
         if model_args.optim_prefix == 'yes':
             optim_prefix_bool = True
         elif model_args.optim_prefix == 'no':
@@ -695,7 +660,6 @@ def main():
 
         if model_args.prefixModel_name_or_path is not None:
             config2 = AutoConfig.from_pretrained(model_args.prefixModel_name_or_path, cache_dir=model_args.cache_dir)
-            # print(config2)
 
             if model_args.prefix_mode == 'embedding':
                 model = PrefixEmbTuning.from_pretrained(
@@ -775,8 +739,6 @@ def main():
         discri_labels = None
 
     elif model_args.tuning_mode == 'finetune-top':
-        # print(model.config)
-        # print(model)
         for param in model.base_model.parameters():
             param.requires_grad = False
 
@@ -846,8 +808,6 @@ def main():
                 total_params += param.numel()
 
         print('the total number of trainable parameters is {}'.format(total_params))
-
-
 
 
     ##############################################################
@@ -926,9 +886,6 @@ def main():
             data_collator = DataCollatorForLanguageModeling(
                 tokenizer=tokenizer, mlm=data_args.mlm, mlm_probability=data_args.mlm_probability
             )
-        # data_collator = DataCollatorForWeightedLanguageModeling(
-        #     tokenizer=tokenizer, mlm=data_args.mlm, mlm_probability=data_args.mlm_probability
-        # )
 
     if (model_args.tuning_mode == 'prefixtune'):
 
@@ -1000,20 +957,13 @@ def main():
                 gpt2_dir = os.path.join(training_args.output_dir, 'gpt2')
                 gpt2.save_pretrained(gpt2_dir)
 
-        # # For convenience, we also re-save the tokenizer to the same directory,
-        # # so that you can share your model easily on huggingface.co/models =)
-        # if trainer.is_world_master():
-        #     tokenizer.save_pretrained(training_args.output_dir)
-
     # Evaluation
     results = {}
     if training_args.do_eval:
         logger.info("*** Evaluate ***")
 
-        # eval_output = trainer.evaluate()
         eval_output = trainer.evaluate(train_dataset)
 
-        # perplexity = math.exp(eval_output["eval_loss"])
         perplexity = eval_output["eval_loss"]
         result = {"perplexity": perplexity}
 
@@ -1047,16 +997,12 @@ def main():
         del model
         del trainer
         torch.cuda.empty_cache()
-        # gpt2 = gpt2.cpu()
         elem = os.path.abspath(training_args.output_dir)
         checkpoint_path = glob.glob(os.path.join(elem, '*checkpoint*'))
         assert len(checkpoint_path) == 1
         checkpoint_path = checkpoint_path[0]
 
         print('running evaluation on ', checkpoint_path)
-
-        # os.system('python gen.py data2text yes valid {} no'.format(checkpoint_path))
-        # os.system('python gen.py data2text yes test {} no'.format(checkpoint_path))
 
     elif data_args.task_mode == 'data2text':
         del model
