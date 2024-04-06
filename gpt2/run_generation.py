@@ -430,7 +430,7 @@ def main():
         action="store_true",
         help="Whether to use 16-bit (mixed) precision (through NVIDIA apex) instead of 32-bit",
     )
-    parser.add_argument("--disabled_prefix_prompt", type=int, default="no", help="The number of samples to generate.")
+    parser.add_argument("--disabled_prefix_prompt", type=str, default="no", help="The number of samples to generate.")
     args = parser.parse_args()
 
     assert args.disabled_prefix_prompt in ['yes', 'no']
