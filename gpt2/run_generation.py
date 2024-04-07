@@ -430,10 +430,9 @@ def main():
         action="store_true",
         help="Whether to use 16-bit (mixed) precision (through NVIDIA apex) instead of 32-bit",
     )
-    parser.add_argument("--disabled_prefix_prompt", type=str, default="no", help="The number of samples to generate.")
+   
     args = parser.parse_args()
 
-    assert args.disabled_prefix_prompt in ['yes', 'no']
     args.device = torch.device("cuda" if torch.cuda.is_available() and not args.no_cuda else "cpu")
     args.n_gpu = 0 if args.no_cuda else torch.cuda.device_count()
 
@@ -1055,7 +1054,7 @@ def main():
                 )
             elif decode_mode == 'beam':
                 past_key_values = prompt
-                if args.disabled_prefix_prompt == "yes" :
+                if settings.DISABLED_PREFIX_PROMPT == "yes" :
                     past_key_values = None
                 #############################
                 output_sequences = gpt2.generate(
